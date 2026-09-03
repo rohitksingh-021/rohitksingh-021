@@ -18,7 +18,7 @@
 
 <p align="center">
   <a href="https://github.com/rohitksingh-021">
-    <img src="https://img.shields.io/badge/Portfolio-6D28D9?style=for-the-badge&logo=vercel&logoColor=white"/>
+    <img src="https://img.shields.io/badge/Portfolio-Coming%20Soon-6D28D9?style=for-the-badge&logo=vercel&logoColor=white"/>
   </a>
   <a href="https://www.linkedin.com/in/rohitksingh021/">
     <img src="https://img.shields.io/badge/LinkedIn-312E81?style=for-the-badge&logo=linkedin&logoColor=white"/>
