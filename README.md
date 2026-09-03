@@ -329,15 +329,28 @@ Worked on the **Grasim Intelligence Platform**, an enterprise AI knowledge syste
 
 ## GitHub Analytics
 
+## GitHub Analytics
+
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=rohitksingh-021&show_icons=true&hide_border=true&bg_color=0D0B17&title_color=A78BFA&icon_color=8B5CF6&text_color=E5E7EB&rank_icon=github" height="180"/>
-  <img src="https://streak-stats.demolab.com?user=rohitksingh-021&hide_border=true&background=0D0B17&ring=8B5CF6&fire=A78BFA&currStreakLabel=A78BFA&sideLabels=C4B5FD&dates=9CA3AF&currStreakNum=FFFFFF&sideNums=FFFFFF" height="180"/>
+  <img
+    src="./profile/stats.svg"
+    alt="GitHub Stats"
+    width="49%"
+  />
+  <img
+    src="https://streak-stats.demolab.com?user=rohitksingh-021&hide_border=true&background=0D0B17&ring=A78BFA&fire=8B5CF6&currStreakLabel=C4B5FD"
+    alt="GitHub Streak"
+    width="49%"
+  />
 </p>
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=rohitksingh-021&layout=compact&hide_border=true&bg_color=0D0B17&title_color=A78BFA&text_color=E5E7EB&langs_count=8" height="180"/>
+  <img
+    src="./profile/top-langs.svg"
+    alt="Top Languages"
+    width="49%"
+  />
 </p>
-
 ---
 
 ## GitHub Trophies
