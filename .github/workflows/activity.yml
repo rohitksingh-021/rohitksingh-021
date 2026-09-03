@@ -1,0 +1,214 @@
+name: Update Contribution Activity
+
+on:
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate activity SVG
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import os
+          import json
+          import urllib.request
+          from datetime import datetime
+
+          username = "rohitksingh-021"
+          token = os.environ["GH_TOKEN"]
+
+          query = """
+          query($login: String!) {
+            user(login: $login) {
+              contributionsCollection {
+                contributionCalendar {
+                  totalContributions
+                  weeks {
+                    contributionDays {
+                      date
+                      contributionCount
+                    }
+                  }
+                }
+              }
+            }
+          }
+          """
+
+          payload = json.dumps({
+              "query": query,
+              "variables": {"login": username}
+          }).encode()
+
+          request = urllib.request.Request(
+              "https://api.github.com/graphql",
+              data=payload,
+              headers={
+                  "Authorization": f"Bearer {token}",
+                  "Content-Type": "application/json"
+              }
+          )
+
+          with urllib.request.urlopen(request) as response:
+              data = json.load(response)
+
+          calendar = data["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+
+          days = []
+
+          for week in calendar["weeks"]:
+              for day in week["contributionDays"]:
+                  days.append(day)
+
+          # Keep the most recent 365 days
+          days = days[-365:]
+
+          max_count = max(
+              (day["contributionCount"] for day in days),
+              default=1
+          )
+
+          # SVG dimensions
+          width = 1000
+          height = 280
+
+          cell = 14
+          gap = 3
+
+          left = 40
+          top = 65
+
+          rows = 7
+          cols = (len(days) + rows - 1) // rows
+
+          svg = []
+
+          svg.append(
+              f'<svg xmlns="http://www.w3.org/2000/svg" '
+              f'viewBox="0 0 {width} {height}" '
+              f'width="{width}" height="{height}">'
+          )
+
+          svg.append("""
+          <defs>
+            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#0b0715"/>
+              <stop offset="100%" stop-color="#15102b"/>
+            </linearGradient>
+
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="2.5" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          """)
+
+          svg.append(
+              f'<rect width="{width}" height="{height}" rx="18" fill="url(#bg)"/>'
+          )
+
+          svg.append(
+              '<text x="40" y="35" fill="#ffffff" '
+              'font-family="Arial, sans-serif" font-size="18" '
+              'font-weight="bold">CONTRIBUTION ACTIVITY</text>'
+          )
+
+          svg.append(
+              f'<text x="{width-40}" y="35" text-anchor="end" '
+              'fill="#9ca3af" font-family="Arial, sans-serif" '
+              'font-size="12">'
+              f'{calendar["totalContributions"]} contributions</text>'
+          )
+
+          # Draw contribution cells
+          for i, day in enumerate(days):
+
+              week = i // rows
+              row = i % rows
+
+              x = left + week * (cell + gap)
+              y = top + row * (cell + gap)
+
+              count = day["contributionCount"]
+
+              if count == 0:
+                  fill = "#1a1628"
+              elif count <= max_count * 0.25:
+                  fill = "#3b236b"
+              elif count <= max_count * 0.50:
+                  fill = "#673ab7"
+              elif count <= max_count * 0.75:
+                  fill = "#8b5cf6"
+              else:
+                  fill = "#c084fc"
+
+              svg.append(
+                  f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" '
+                  f'rx="3" fill="{fill}"/>'
+              )
+
+          # Legend
+          legend_y = height - 30
+
+          svg.append(
+              f'<text x="40" y="{legend_y}" fill="#9ca3af" '
+              'font-family="Arial, sans-serif" font-size="11">Less</text>'
+          )
+
+          legend_colors = [
+              "#1a1628",
+              "#3b236b",
+              "#673ab7",
+              "#8b5cf6",
+              "#c084fc"
+          ]
+
+          for i, color in enumerate(legend_colors):
+              x = 75 + i * 18
+
+              svg.append(
+                  f'<rect x="{x}" y="{legend_y-10}" width="12" height="12" '
+                  f'rx="3" fill="{color}"/>'
+              )
+
+          svg.append(
+              f'<text x="{75 + len(legend_colors)*18 + 5}" '
+              f'y="{legend_y}" fill="#9ca3af" '
+              'font-family="Arial, sans-serif" font-size="11">More</text>'
+          )
+
+          svg.append("</svg>")
+
+          os.makedirs("profile", exist_ok=True)
+
+          with open("profile/activity.svg", "w", encoding="utf-8") as f:
+              f.write("\n".join(svg))
+
+          print("Activity SVG generated successfully.")
+          PY
+
+      - name: Commit generated SVG
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add profile/activity.svg
+
+          git commit -m "Update contribution activity" || exit 0
+
+          git push
