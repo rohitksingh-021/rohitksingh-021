@@ -329,8 +329,6 @@ Worked on the **Grasim Intelligence Platform**, an enterprise AI knowledge syste
 
 ## GitHub Analytics
 
-## GitHub Analytics
-
 <p align="center">
   <img
     src="./profile/stats.svg"
