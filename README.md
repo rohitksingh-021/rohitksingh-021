@@ -343,7 +343,7 @@ Worked on the **Grasim Intelligence Platform**, an enterprise AI knowledge syste
 ## GitHub Trophies
 
 <p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=rohitksingh-021&theme=onestar&no-frame=true&no-bg=true&margin-w=8&column=7" width="90%"/>
+  <img src="./profile/trophy.svg" alt="GitHub Trophies" width="90%"/>
 </p>
 
 ---
