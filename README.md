@@ -351,7 +351,11 @@ Worked on the **Grasim Intelligence Platform**, an enterprise AI knowledge syste
 ## Contribution Activity
 
 <p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=rohitksingh-021&bg_color=0D0B17&color=C4B5FD&line=8B5CF6&point=A78BFA&area=true&hide_border=true" width="100%"/>
+  <img
+    src="./profile/activity.svg"
+    alt="GitHub Contribution Activity"
+    width="95%"
+  />
 </p>
 
 ---
