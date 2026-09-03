@@ -336,10 +336,10 @@ Worked on the **Grasim Intelligence Platform**, an enterprise AI knowledge syste
     width="49%"
   />
   <img
-    src="https://streak-stats.demolab.com?user=rohitksingh-021&hide_border=true&background=0D0B17&ring=A78BFA&fire=8B5CF6&currStreakLabel=C4B5FD"
-    alt="GitHub Streak"
-    width="49%"
-  />
+  src="https://streak-stats.demolab.com?user=rohitksingh-021&hide_border=true&background=0D0B17&border_radius=12&stroke=312E81&ring=A78BFA&fire=8B5CF6&currStreakNum=FFFFFF&sideNums=FFFFFF&currStreakLabel=C4B5FD&sideLabels=C4B5FD&dates=94A3B8"
+  alt="GitHub Streak"
+  width="49%"
+/>
 </p>
 
 <p align="center">
